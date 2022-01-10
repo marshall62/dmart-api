@@ -40,5 +40,12 @@ Use: Add some new paintings:
 
 I see that MongoAtlas has a read/write data API that allows me to modify the database from a locally running client (using curl for example).  This will make it relatively easy to create a utility that I can use to put new records into mongo from my machine.  See [https://docs.atlas.mongodb.com/api/data-api/]
 
+## Heroku:
+
+On git push this should deploy on heroku automatically
+
+https://dmart-api.herokuapp.com
+https://dmart-api.herokuapp.com/config
+
 
 
