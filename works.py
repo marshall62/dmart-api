@@ -1,0 +1,150 @@
+[
+
+  {
+    'id': '1',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/blueberries.jpg",
+    'title': "Blueberries",
+    'dimensions': "14 x 11",
+    'media': "oil on panel",
+    'date': "2009",
+    'price': "Sold",
+    'tags': ["exemplar", "still life"],
+    'exemplarTitle': "Still life"
+  },
+  {
+    'id': '2',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/DSC_0054.jpg",
+    'tags': ["still life"],
+    'date': "2020",
+  },
+  {
+    'id': '3',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/DSC_0057.jpg",
+    'tags': ["still life"],
+    'date': "2020",
+  },
+  {
+    'id': '4',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/DSC_0058.jpg",
+    'tags': ["still life"],
+    'date': "2020",
+  },
+  {
+    'id': '5',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/DSC_0059.jpg",
+    'tags': ["still life"],
+    'date': "2020",
+  },
+  {
+    'id': '6',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/DSC_0062.jpg",
+    'tags': ["still life"],
+  },
+  {
+    'id': '7',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/IMG_1550.jpeg",
+    'tags': ["still life"],
+  },
+  {
+    'id': '8',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/IMG_1776.jpeg",
+    'tags': ["still life"],
+  },
+  {
+    'id': '9',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/IMG_1832.jpeg",
+    'tags': ["still life"],
+  },
+  {
+    'id': '10',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/IMG_7488.jpeg",
+    'tags': ["still life"],
+  },
+  {
+    'id': '11',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/venus2.jpg",
+    'title': "Venus 2",
+    'dimensions': "28 x 20",
+    'media': "oil on canvas",
+    'date': "2018",
+    'tags': ["still life"],
+  },
+  {
+    'id': '12',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/venus1.jpg",
+    'title': "Venus 1",
+    'dimensions': "28 x 20",
+    'media': "oil on canvas",
+    'date': "2018",
+    'tags': ["still life"],
+  },
+  {
+    'id': '13',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/DSC_0159.jpg",
+    'title': "Still life",
+    'dimensions': "28 x 20",
+    'media': "oil on canvas",
+    'date': "2018",
+    'tags': ["still life"],
+  },
+  {
+    'id': '14',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/DSC_0161.jpeg",
+    'title': "Still life",
+    'dimensions': "28 x 20",
+    'media': "oil on canvas",
+    'date': "2018",
+    'tags': ["still life"],
+  },
+  {
+    'id': '15',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/DSC_0069.jpg",
+    'title': "Kids in the Studio",
+    'dimensions': "28 x 20",
+    'media': "oil on canvas",
+    'date': "2018",
+    'tags': ["other", "exemplar"],
+    'exemplarTitle': "Other"
+  },
+
+  {
+    'id': '20',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/portraits/paula asleep.jpeg",
+    'title': "Paula",
+    'dimensions': "28 x 20",
+    'media': "oil on canvas",
+    'date': "1994",
+    'tags': ["portrait", "exemplar"],
+    'exemplarTitle': "Portrait"
+  },
+
+  {
+    'id': '16',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/landscapes/IMG_1436.jpeg",
+    'title': "Landscape",
+    'dimensions': "28 x 20",
+    'media': "oil on canvas",
+    'date': "2018",
+    'tags': ["landscape", "exemplar"],
+    'exemplarTitle': "Landscape"
+  },
+  {
+    'id': '17',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/landscapes/IMG_1437.jpeg",
+    'title': "Landscape",
+    'dimensions': "28 x 20",
+    'media': "oil on canvas",
+    'date': "2018",
+    'tags': ["landscape"],
+  },
+  {
+    'id': '18',
+    'url': "https://raw.githubusercontent.com/marshall62/dmart/main/images/landscapes/IMG_1462.jpeg",
+    'title': "Landscape",
+    'dimensions': "28 x 20",
+    'media': "oil on canvas",
+    'date': "2018",
+    'tags': ["landscape"],
+  },
+]
+
