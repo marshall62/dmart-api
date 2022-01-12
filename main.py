@@ -11,23 +11,20 @@ from PyObjectId import PyObjectId
 import requests
 import urllib
 import io
-import os
 from PIL import Image
 from typing import Dict
 import mongod
 
 origins = [
-    # "http://localhost.tiangolo.com",
-    # "https://localhost.tiangolo.com",
-    # "http://localhost",
+    "http://localhost:8080",
+    "https://localhost:8080",
+    "https://dm-art.heroku.app.com",
     "http://localhost:4200",
 ]
 
 
 # client = motor.motor_asyncio.AsyncIOMotorClient(CONNECTION_STRING)
 # print(f"Client obtained as {client}")
-# # client = MongoClient(CONNECTION_STRING)
-# # db = client['artworks']
 # db = client.artworks
 # print(f"artworks db is {db}")
 # ARTWORK = db.get_collection("works")
