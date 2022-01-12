@@ -159,14 +159,15 @@ async def thumbnail_image (filename: str, isNumber = False):
 
 def convert_to_thumbnail (img: Image):
   # print(img._getexif().items())
-  exif=dict((TAGS[k], v) for k, v in img._getexif().items() if k in TAGS)
-  # some images have meta-data (Exif) that contains info like orientation.
-  if orient:=exif.get('Orientation'):
-      # only handles 2 of 8 possible orientations
-      if orient == 8:
-        img = img.rotate(90, expand=True)
-      elif orient == 2:
-        img = img.rotate(270, expand=True)
+  if img._getexif():
+    exif=dict((TAGS[k], v) for k, v in img._getexif().items() if k in TAGS)
+    # some images have meta-data (Exif) that contains info like orientation.
+    if orient:=exif.get('Orientation'):
+        # only handles 2 of 8 possible orientations
+        if orient == 8:
+          img = img.rotate(90, expand=True)
+        elif orient == 2:
+          img = img.rotate(270, expand=True)
 
   img.thumbnail((100,100), Image.ANTIALIAS)
   return img
