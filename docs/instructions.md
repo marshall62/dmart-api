@@ -1,3 +1,13 @@
+## Mongo Db
+
+An environment var must be set to provide the URL to the cloud
+mongo db.  The environment var is MONGO_DATASOURCE
+
+Db connection string can be obtained here:
+https://cloud.mongodb.com/v2/615490640c90e4261e121d89#clusters/detail/dm-art-cluster
+
+Click the Connect button and select Mongo Db Compass.  It will show the connection string.
+
 ## Running
 Be in dmart-api root and source venv/bin/activate
 uvicorn main:app --reload

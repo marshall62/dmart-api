@@ -2,6 +2,7 @@ from PIL import Image
 import os
 import pathlib
 import PIL
+from PIL.ExifTags import TAGS
 import glob
 
 
@@ -20,4 +21,23 @@ def resize_dir (dir):
       img.thumbnail((100,100))
       img.save(os.path.join(dir,"thumb",image), optimize=True, quality=95)
 
-resize_dir("/Users/marshald/dev/personal/dmart/api/test")
+def resize_path (path):
+    img = Image.open(path)
+    path, ext = os.path.splitext(path)
+    print("Saving thumbnail as ", path+"_thumb"+ext)
+    # print(img._getexif().items())
+    exif=dict((TAGS[k], v) for k, v in img._getexif().items() if k in TAGS)
+    if orient:=exif['Orientation']:
+        print(f"Exif orientation{orient} Rotating 90")
+        img=img.rotate(90 if orient==8 else 270, expand=True)
+    img.thumbnail((100,100), Image.ANTIALIAS)
+    img.save(path+"_thumb"+ext)
+
+import sys
+
+if __name__ == '__main__':
+    print("args: ", sys.argv)
+    if len(sys.argv) > 1:
+        resize_path(sys.argv[1])
+    else:
+        print("Need to give a path to image file")

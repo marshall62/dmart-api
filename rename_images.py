@@ -87,5 +87,7 @@ def process_suffixes (image_filenames):
 # N.B. This will work within one directory preserving files that have already been converted
 # and renaming those that haven't
 if __name__ == '__main__':
-  rename_images("/Users/marshald/dev/personal/dmart/images", "/Users/marshald/dev/personal/dmart/images")
-  # rename_images("/Users/marshald/dev/personal/dmart/images")
+  root_dir = "/srv/dev/dmart"
+  # root_dir = "/User/marshald/dev/personal/dmart"
+  # rename_images(root_dir + "/images", root_dir + "/images")
+  rename_images(root_dir + "/images")
