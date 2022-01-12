@@ -29,7 +29,10 @@ def resize_path (path):
     exif=dict((TAGS[k], v) for k, v in img._getexif().items() if k in TAGS)
     if orient:=exif['Orientation']:
         print(f"Exif orientation{orient} Rotating 90")
-        img=img.rotate(90 if orient==8 else 270, expand=True)
+        if orient == 8:
+          img = img.rotate(90, expand=True)
+        elif orient == 2:
+          img = img.rotate(270, expand=True)
     img.thumbnail((100,100), Image.ANTIALIAS)
     img.save(path+"_thumb"+ext)
 

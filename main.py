@@ -12,6 +12,7 @@ import requests
 import urllib
 import io
 from PIL import Image
+from PIL.ExifTags import TAGS
 from typing import Dict
 import mongod
 
@@ -148,14 +149,27 @@ async def thumbnail_image (filename: str, isNumber = False):
     if not source_img.ok:
       raise HTTPException(status_code=404, detail="Could not find github image: " + url)
     image = Image.open(source_img.raw)
-    # create a thumbnail image
-    image.thumbnail((100, 100))
+    convert_to_thumbnail(image)
     imgio = io.BytesIO()
     image.save(imgio, 'JPEG')
     # cache the thumbnail
     thumbnail_cache[filename] = imgio
   imgio.seek(0)
   return StreamingResponse(content=imgio, media_type="image/jpeg")
+
+def convert_to_thumbnail (img: Image):
+  # print(img._getexif().items())
+  exif=dict((TAGS[k], v) for k, v in img._getexif().items() if k in TAGS)
+  # some images have meta-data (Exif) that contains info like orientation.
+  if orient:=exif['Orientation']:
+      # only handles 2 of 8 possible orientations
+      if orient == 8:
+        img = img.rotate(90, expand=True)
+      elif orient == 2:
+        img = img.rotate(270, expand=True)
+
+  img.thumbnail((100,100), Image.ANTIALIAS)
+  return img
 
 
 def work_matches (work, term):
