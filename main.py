@@ -19,7 +19,7 @@ import mongod
 origins = [
     "http://localhost:8080",
     "https://localhost:8080",
-    "https://dm-art.heroku.app.com",
+    "https://dm-art.herokuapp.com",
     "http://localhost:4200",
 ]
 
