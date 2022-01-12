@@ -149,7 +149,7 @@ async def thumbnail_image (filename: str, isNumber = False):
     if not source_img.ok:
       raise HTTPException(status_code=404, detail="Could not find github image: " + url)
     image = Image.open(source_img.raw)
-    convert_to_thumbnail(image)
+    image = convert_to_thumbnail(image)
     imgio = io.BytesIO()
     image.save(imgio, 'JPEG')
     # cache the thumbnail
