@@ -161,7 +161,7 @@ def convert_to_thumbnail (img: Image):
   # print(img._getexif().items())
   exif=dict((TAGS[k], v) for k, v in img._getexif().items() if k in TAGS)
   # some images have meta-data (Exif) that contains info like orientation.
-  if orient:=exif['Orientation']:
+  if orient:=exif.get('Orientation'):
       # only handles 2 of 8 possible orientations
       if orient == 8:
         img = img.rotate(90, expand=True)
