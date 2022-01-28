@@ -9,8 +9,14 @@ https://cloud.mongodb.com/v2/615490640c90e4261e121d89#clusters/detail/dm-art-clu
 Click the Connect button and select Mongo Db Compass.  It will show the connection string.
 
 ## Running
+
+
 Be in dmart-api root and source venv/bin/activate
+
+set MONGO_DATASOURCE environment var and run
 uvicorn main:app --reload
+
+./serve.sh   will do the above.
 
 ## Debugging the python API with VSCode
 

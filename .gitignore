@@ -3,3 +3,4 @@
 /.vscode
 sensitive_info.txt
 .DS_Store
+serve.sh

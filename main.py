@@ -1,12 +1,13 @@
 from typing import Optional, List
-# from pymongo import MongoClient
+from fastapi.encoders import jsonable_encoder
+from fastapi.params import Body
+
 import motor.motor_asyncio
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import Response, StreamingResponse
+from fastapi import FastAPI, HTTPException, status
+from fastapi.responses import StreamingResponse, Response
 from bson.objectid import ObjectId
 from pydantic import BaseModel, Field
 from fastapi.middleware.cors import CORSMiddleware
-# from works import ALL_WORK
 from PyObjectId import PyObjectId
 import requests
 import urllib
@@ -21,6 +22,7 @@ origins = [
     "https://localhost:8080",
     "https://dm-art.herokuapp.com",
     "http://localhost:4200",
+    "http://localhost:3000",
 ]
 
 
@@ -52,7 +54,7 @@ class Config(BaseModel):
   backgroundColor: Optional[str] = "#FFF8DC"
   navbarTextColor: Optional[str] = "#164D7A"
   navbarHoverTextColor: Optional[str] = "#F97924"
-  filename: Optional[str] = ''
+  filename: Optional[str] = 'david_marshall_'
 
   class Config:
     allow_population_by_field_name = True
@@ -60,19 +62,24 @@ class Config(BaseModel):
     json_encoders = {ObjectId: str}
 
 
-class Work(BaseModel):
-  # id: Optional[str] = None
-  id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-  title: Optional[str] = None
-  price: Optional[str] = None
-  date: Optional[str] = None
-  dimensions: Optional[str] = None
-  tags: Optional[List[str]] = None
-  exemplarTitle: Optional[str] = None
-  media: Optional[str] = None
-  url: Optional[str] = None
-  number: Optional[str] = None
+class ArtworkBase(BaseModel):
+  title: Optional[str]
+  price: Optional[float]
+  year: Optional[int]
+  width: Optional[int]
+  height: Optional[int]
+  tags: Optional[List[str]]
+  categoryName: Optional[str]
+  media: Optional[str]
+  imagePath: Optional[str]
+  isSold: Optional[bool]
+  class Config:
+    allow_population_by_field_name = True
+    arbitrary_types_allowed = True
 
+class Artwork(ArtworkBase):
+  id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+  title: str = Field(...)
   class Config:
     allow_population_by_field_name = True
     arbitrary_types_allowed = True
@@ -85,24 +92,71 @@ def read_root():
 
 @app.get("/config", response_description="config object", response_model=Config)
 async def get_config ():
-  print(f"In get_config with db: {mongod.db}")
   config = mongod.db.get_collection('config')
-  print(f"GET /config {config}")
   conf = await config.find_one()
   return conf
 
 
-@app.get("/works",response_description="List all works", response_model=List[Work])
+@app.post("/works",
+  status_code=status.HTTP_201_CREATED,
+  description="Create an artwork",
+  response_model=Artwork)
+async def create_work (work: ArtworkBase):
+  # input is ArtworkBase (no id) because jsonable_encoder will add in an id without ObjectId wrapper if the work
+  # of type Artwork
+  work_dict = jsonable_encoder(work) # creates dict ready for insertion into Mongo (no id)
+  artworks = mongod.db.get_collection('works')
+  insert_result = await artworks.insert_one(work_dict) # _id will be generated
+  new_artwork = await artworks.find_one(ObjectId(insert_result.inserted_id))
+  # convert dictionary to Artwork object for serialization
+  r = Artwork(**new_artwork)
+  return r
+  
+
+@app.patch("/works/{id}",
+  description="Update artwork", 
+  status_code=status.HTTP_200_OK,
+  response_model=Artwork)
+async def update_work (id: str, artwork: ArtworkBase):
+  print(f'Update {id} {artwork}')
+
+  artworks = mongod.db.get_collection('works')
+  artwork = artwork.dict(exclude_unset=True)
+  field_json = jsonable_encoder(artwork)
+  if len(artwork) >= 1:
+      update_result = await artworks.update_one({"_id": ObjectId(id)}, {"$set": field_json})
+      if update_result.modified_count == 1:
+          if (
+              updated_artwork := await artworks.find_one({"_id": ObjectId(id)})
+          ) is not None:
+              return updated_artwork
+  if (existing_artwork := await artworks.find_one({"_id": ObjectId(id)})) is not None:
+      return existing_artwork
+  raise HTTPException(status_code=404, detail=f"Artwork {id} not found")
+
+@app.delete("/works/{id}", 
+  description="Delete an artwork")
+async def delete_work(id: str):
+  artworks = mongod.db.get_collection('works')
+  delete_result = await artworks.delete_one({"_id": ObjectId(id)})
+  if delete_result.deleted_count == 1:
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+  else:
+    raise HTTPException(status_code=404, detail=f"Artwork {id} not found")
+
+
+@app.get("/works",
+  description="List all works", 
+  response_model=List[Artwork])
 async def get_all_works():
   artworks = mongod.db.get_collection('works')
   num = await artworks.count_documents({})
   print("There are ", num, "artworks")
-
   x = await artworks.find().to_list(1000)
   return x
 
 @app.get("/works/tag/{tag}",response_description="List all works with matching tag",
- response_model=List[Work])
+ response_model=List[Artwork])
 async def get_works_by_tag(tag: str):
   artworks = mongod.db.get_collection('works')
   results = [w for w in await artworks.find().to_list(1000) if tag in w['tags']]
@@ -110,7 +164,7 @@ async def get_works_by_tag(tag: str):
   print(f"Tag match found {count} records ")
   return results
 
-@app.get("/works/{id}",response_description="Get a single work", response_model=Work)
+@app.get("/works/{id}",response_description="Get a single work", response_model=Artwork)
 async def get_work_by_id(id: str):
   artworks = mongod.db.get_collection('works')
   try:
@@ -120,7 +174,7 @@ async def get_work_by_id(id: str):
     raise HTTPException(status_code=404, detail=f"Work {id} not found")
 
 @app.get("/works/search/{term}",response_description="Search works",
-  response_model=List[Work])
+  response_model=List[Artwork])
 async def search_works(term: str):
   artworks = mongod.db.get_collection('works')
   results = [w for w in await artworks.find().to_list(1000) if work_matches(w,term)]
@@ -175,12 +229,11 @@ def convert_to_thumbnail (img: Image):
 
 def work_matches (work, term):
   term = term.lower()
-  for key in ['title', 'price', 'date', 'dimensions', 'media', 'tags']:
+  for key in ['title', 'price', 'year', 'width', 'height', 'media', 'tags']:
     if term in str(work.get(key,'')).lower():
       return True
   return False
 
 
-# @app.put("/items/{item_id}")
-# def update_item(item_id: int, item: Item):
-#     return {"item_name": item.name, "item_id": item_id}
+
+
