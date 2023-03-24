@@ -22,6 +22,8 @@ origins = [
     "https://localhost:8080",
     "https://dm-art.herokuapp.com",
     "https://davidmarshall.us",
+    "http://www.davidmarshall.us",
+    "https://www.davidmarshall.us",
     "http://davidmarshall.us",
     "http://localhost:4200",
     "http://localhost:3000",
