@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "b0abd4c3-c846-4c72-9c9f-2b6033ba274b",
+		"name": "dmart",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1447368"
+	},
+	"item": [
+		{
+			"name": "hello world",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "config",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "artworks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/works",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"works"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "artworks by tag (landscape)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/works/tag/landscape",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"works",
+						"tag",
+						"landscape"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "artworks by tag (exemplar)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/works/tag/exemplar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"works",
+						"tag",
+						"exemplar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "artworks search (maple)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/works/search/maple",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"works",
+						"search",
+						"maple"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get thumbnail image",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/images/thumbnail?filename=201&isNumber=True",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"images",
+						"thumbnail"
+					],
+					"query": [
+						{
+							"key": "filename",
+							"value": "201"
+						},
+						{
+							"key": "isNumber",
+							"value": "True"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HEROKU: config",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dmart-api.herokuapp.com/config",
+					"protocol": "https",
+					"host": [
+						"dmart-api",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HEROKU: artworks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dmart-api.herokuapp.com/works",
+					"protocol": "https",
+					"host": [
+						"dmart-api",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"works"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

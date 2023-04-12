@@ -6,7 +6,12 @@ mongo db.  The environment var is MONGO_DATASOURCE
 Db connection string can be obtained here:
 https://cloud.mongodb.com/v2/615490640c90e4261e121d89#clusters/detail/dm-art-cluster
 
+It is also in my serve.sh (which is not in github)
+
 Click the Connect button and select Mongo Db Compass.  It will show the connection string.
+
+Load the dmart.postman_collection.json into Postman for testing API either 
+running locally or in Heroku
 
 ## Running
 
@@ -16,7 +21,35 @@ Be in dmart-api root and source venv/bin/activate
 set MONGO_DATASOURCE environment var and run
 uvicorn main:app --reload
 
+OR
+
 ./serve.sh   will do the above.
+
+## Troubleshooting Mongo DB 
+
+Load the dmart.postman_collection.json into Postman for testing API
+
+I'm using cloud.mongodb.com and login with my google id.
+
+When running my local API it sometimes fails to connect to the mongodb.
+Here is background info:
+
+Line 41 of main.py is a callback that connects to mongodb when fastapi launches.
+
+Test the function that connects (mongod.connect_db):
+ - venv/bin/activate
+ - export MONGO_DATASOURCE=<value>
+ - python3
+ - import mongod
+ - mongod.test_query()
+ - Expect to see that it shows the configuration object
+
+Make sure the MONGO_DATASOURCE environment variable is correctly set to the above URI
+(when running in PyCharm it should be set in the run/debug config)
+
+Launch MongoDB Compass Desktop App and Connect Using the URI above (it's saved)
+View the artworks collection
+
 
 ## Debugging the python API with VSCode
 
@@ -56,6 +89,8 @@ Use: Add some new paintings:
 I see that MongoAtlas has a read/write data API that allows me to modify the database from a locally running client (using curl for example).  This will make it relatively easy to create a utility that I can use to put new records into mongo from my machine.  See [https://docs.atlas.mongodb.com/api/data-api/]
 
 ## Heroku:
+
+Note:  I have to use a Google free authentication app on my phone to login to Heroku
 
 On git push this should deploy on heroku automatically
 
